@@ -92,48 +92,61 @@ def predict(symb):
     return day7
 
 def sentiment(company):
-    finviz_url = "https://finviz.com/quote.ashx?t="
-    tickers = [company]
-    nltk.download("vader_lexicon")
-    news_tables = {}
-    for ticker in tickers:
-        url = finviz_url + ticker
-        req = Request(url=url, headers={'user-agent': 'my-app'})
-        response = urlopen(req)
-        html = BeautifulSoup(response,  'html')
-        news_table = html.find(id='news-table')
-        news_tables[ticker] = news_table
-    
-    parsed_data = []
-    sample_news = []
-    for ticker, news_table in news_tables.items():
-        for row in news_table.findAll("tr"):
-            title = str(row.a).split(">")
-        if title[0] != "None":
-            title = title[1].split("<")[0]
-        else:
-            continue
-        if len(sample_news) < 10:
-            sample_news.append(title)
-        date_data = row.td.text.split(' ')
-        if len(date_data) == 1:
-            time = date_data[0]
-        else: 
-            date = date_data[0]
-            time = date_data[1]
-        if currentdate.today().strftime("%b-%d-%y") != date:
-            break
-        parsed_data.append([ticker, date, time, title])
+  finviz_url = "https://finviz.com/quote.ashx?t="
+  tickers = [company]
+  nltk.download("vader_lexicon")
+  news_tables = {}
+  for ticker in tickers:
+    url = finviz_url + ticker
+    req = Request(url=url, headers={'user-agent': 'my-app'})
+    response = urlopen(req)
+    html = BeautifulSoup(response, 'html')
+    news_table = html.find(id='news-table')
+    news_tables[ticker] = news_table
+
+
+  parsed_data = []
+  sample_news = []
+  for ticker, news_table in news_tables.items():
+
+
+    for row in news_table.findAll("tr"):
+      title = str(row.a).split(">")
+
+      if title[0] != "None":
+        title = title[1].split("<")[0]
+      else:
+        continue
+      if len(sample_news) < 10:
+        sample_news.append(title)
+
+      date_data = row.td.text.split(' ')
+      if len(date_data) == 1:
+        time = date_data[0]
+      else: 
+        date = date_data[0]
+        time = date_data[1]
+      
+
+      if currentdate.today().strftime("%b-%d-%y") != date:
         break
-    df = pd.DataFrame(parsed_data, columns=['Ticker', 'Date', 'Time', 'Title'])
-    vader = SentimentIntensityAnalyzer()
-    f = lambda title: vader.polarity_scores(title)['compound']
-    df['compound'] = df['Title'].apply(f)
-    df['Date'] = pd.to_datetime(df.Date).dt.date
-    mean_df = df.groupby(['Ticker', 'Date']).mean().unstack()
-    mean_df = mean_df.xs('compound', axis='columns').transpose()
-    return (mean_df[company][0])
-    
+
+      
+      parsed_data.append([ticker, date, time, title])
+    break
+
+
+  df = pd.DataFrame(parsed_data, columns=['Ticker', 'Date', 'Time', 'Title'])
+  vader = SentimentIntensityAnalyzer()
+  f = lambda title: vader.polarity_scores(title)['compound']
+  df['compound'] = df['Title'].apply(f)
+  df['Date'] = pd.to_datetime(df.Date).dt.date
+  # print(df)
+  # plt.figure(figsize=(10,8))
+  mean_df = df.groupby(['Ticker', 'Date']).mean().unstack()
+  # print(mean_df.get('compound'))
+  mean_df = mean_df.xs('compound', axis='columns').transpose()
+  return mean_df[company][0]
 
 #print(sentiment("TSLA"))
 @app.route('/getmsg/', methods=['GET'])
