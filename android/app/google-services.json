@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "919441355193",
+    "project_id": "finsor-59166",
+    "storage_bucket": "finsor-59166.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919441355193:android:6916c4a98a812572e4c668",
+        "android_client_info": {
+          "package_name": "com.aadeshkheria.finsor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919441355193-07n8aeu0ndnmhmp7jrv59fqhvb203hvn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDnXwgbV4m5Tdqw78jyGpk4FPcFp9wJ1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919441355193-07n8aeu0ndnmhmp7jrv59fqhvb203hvn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
