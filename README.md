@@ -1,6 +1,6 @@
 # finsor
 
-Official submission of hackUMBC for Kushal Kapoor, Aadesh Kheria, Aryan Agrawal, Rishabh Chheda
+Official submission of hackUMBC for Kushal Kapoor, Aadesh Kheria, Aryan Agrawal(Github - aryan5276), Rishabh Chheda
 
 finsor is an financial advising application that uses Machine and Deep Learning (ML and DL) to predict the future price of stocks. Using ML and DL provides us with the ability to study years of past data, study patterns, and predict the future price of the share.
 
